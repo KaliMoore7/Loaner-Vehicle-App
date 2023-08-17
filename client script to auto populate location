@@ -1,0 +1,20 @@
+function onChange(control, oldValue, newValue, isLoading) {
+    if (isLoading || newValue == '') {
+        return;
+    }
+
+    //Type appropriate comment here, and begin script below
+    var ga = new GlideAjax('getLocation'); // getLocation is the script include class 
+    ga.addParam('sysparm_name', 'locationDetail'); // locationDetail is the script include method 
+    ga.addParam('sysparm_user_sysid', g_form.getValue("Requested_for")); // Set parameter sysparm_user_sysid to 'requested for' 
+    ga.getXML(setLocation);
+    /* Call getLocation.locationDetail() with the parameter sysparm_user_name set to 'Requested_for' 
+        and use the callback function setLocation() to return the result when ready */
+
+   
+}
+ // the callback function for returning the result from the server-side code
+    function setLocation(response) {
+        var answer = response.responseXML.documentElement.getAttribute("answer");
+       g_form.setValue('office_location', answer);
+    }
