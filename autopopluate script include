@@ -1,0 +1,19 @@
+var getLocation = Class.create();
+getLocation.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+    locationDetail: function() {
+
+        var location = '';
+        var userid = this.getParameter('sysparm_user_sysid');
+
+        var gr = new GlideRecord('sys_user');
+        gr.addQuery('sys_id', userid);
+        gr.query();
+
+        if (gr.next()) {
+            location = gr.getValue('location');
+        }
+
+        return location;
+    },
+    type: 'getLocation'
+});
